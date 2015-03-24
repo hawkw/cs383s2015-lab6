@@ -18,18 +18,16 @@ configurations {
     sshAntTask
     provided
 }
-
-
 sourceSets {
-    main.compileClasspath += configurations.provided
-    test.compileClasspath += configurations.provided
-    test.runtimeClasspath += configurations.provided
+    main.compileClasspath += [configurations.provided]
+    test.compileClasspath += [configurations.provided]
+    test.runtimeClasspath += [configurations.provided]
 }
 
 repositories {
     mavenCentral()
      flatDir {
-       dirs  System.getenv('EV3_HOME')+'/lib/ev3'
+       dirs  (System.env.EV3_HOME != null ? System.env.EV3_HOME + "/lib/ev3": '/opt/lejos-ev3/lib/ev3')
    }
 }
 
@@ -78,3 +76,9 @@ task deployEV3 << {
 }
 
 //deployEV3.dependsOn ['workerJar', 'scoutJar']
+
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
