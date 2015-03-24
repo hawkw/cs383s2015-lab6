@@ -5,13 +5,19 @@ import lejos.hardware.port.{MotorPort, SensorPort, Port}
 import lejos.hardware.sensor.EV3ColorSensor
 import lejos.robotics.SampleProvider
 import lejos.robotics.navigation.DifferentialPilot
+import lejos.robotics.navigation.Navigator
+
+import scala.language.postfixOps
 
 /**
  * Stores shared robot configuration.
  *
  * @author Hawk Weisman
  */
-object Robot {
+trait Robot {
+
+  type Coordinate = Tuple2[Float,Float]
+
   // -------------------------------------------------------------------------
   // PORT CONFIGURATION
   // -------------------------------------------------------------------------
@@ -29,25 +35,39 @@ object Robot {
   private val WHEEL_DIAM  = 2.0625f
   private val TRACK_WIDTH = 4.75f
 
+  // -------------------------------------------------------------------------
+  // LeJOS CLASSES
+  // -------------------------------------------------------------------------
   private val colorSensor = new EV3ColorSensor(SENSOR_COLOR)
   private val leftMotor   = new EV3LargeRegulatedMotor(MOTOR_LEFT)
   private val rightMotor  = new EV3LargeRegulatedMotor(MOTOR_RIGHT)
+  private val colorIDProvider = colorSensor.getColorIDMode
+  private val pilot           = new DifferentialPilot(WHEEL_DIAM, TRACK_WIDTH, leftMotor, rightMotor)
+  private val nav             = new Navigator(pilot)
+  private val poseProvider    = nav getPoseProvider
+
+  private val sample = new Array[Float](1) // this is because the LeJOS api is awful
 
   /**
-   * Factory method for the color sensor color ID mode
-   *
-   * @return the color ID mode sensor provider
+   * Move the robot to a coordinate pair
+   * @param where the coordinate to move to
    */
-  def colorIDProvider: SampleProvider = colorSensor.getColorIDMode
+  def goTo(where: Coordinate): Unit = nav goTo (where._1,where._2)
 
   /**
-   * Factory method for a differential pilot with the robot's current
-   * configuration.
-   *
-   * @return a DifferentialPilot configured for the robot's current
-   *         configuration.
+   * @return the current coordinates
    */
-  def pilot: DifferentialPilot = new DifferentialPilot(
-    WHEEL_DIAM, TRACK_WIDTH, leftMotor, rightMotor)
+  def location: Coordinate  = (poseProvider.getPose getX, poseProvider.getPose getY)
+
+  /**
+   * @return the color ID currently under the color sensor
+   */
+  def checkColor: Int = {
+    colorIDProvider fetchSample (sample, 0) // ugh, I had to write an impure function
+    sample(0) toInt
+  }
+
+
+
 }
 
