@@ -51,6 +51,8 @@ jar {
 
 task workerJar(type: Jar, dependsOn: build) {
     name = 'workerJar'
+    description = 'Compiles the project and assembles the Worker robot jar'
+
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Worker')
 
@@ -58,6 +60,8 @@ task workerJar(type: Jar, dependsOn: build) {
 
 task scoutJar(type: Jar, dependsOn: build) {
     name = 'scoutJar'
+    description = 'Compiles the project and assembles the Scout robot jar'
+
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Scout')
 }

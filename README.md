@@ -26,7 +26,7 @@ You do _not_ need Gradle or Scala installed, as the included Gradle wrapper scri
 
 #### Build instructions
 
-The Gradle build script has the following tasks:
+To list all available Gradle tasks, type `./gradlew tasks`. The following tasks may be of particular interest:
 
 + `./gradlew build` compiles and tests the project
 + `./gradlew workerJar` assembles the Worker jarfile.
