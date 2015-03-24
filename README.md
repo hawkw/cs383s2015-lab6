@@ -1,1 +1,14 @@
 # cs383s2015-lab6
+
+Building and Deploying
+----------------------
+
+You need LeJOS EV3 installed on your system, and you need to export `$EV3_HOME` to whatever directory EV3 is installed in. This is configured by default on Alden Hall systems. You do _not_ need Gradle or Scala installed, as the included Gradle wrapper script (`gradlew`) will download them for you and automatically manage versions.
+
+The Gradle build script has the following tasks:
+    + `./gradlew build` compiles and tests the project
+    + `./gradlew workerJar` assembles the Worker jarfile.
+    + `./gradlew scoutJar` assembles the Scout jarfile.
+    + `./gradlew deployEV3` will deploy all assembled jarfiles to an EV3 brick if you have one connected. The SSH configuration for the EV3 brick is stored in `gradle.properties`
+
+Note that you may string multiple tasks together, as in `./gradlew workerJar scoutJar deployEV3`. The Jar tasks will build the project if it has not already been built.

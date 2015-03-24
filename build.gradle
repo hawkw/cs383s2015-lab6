@@ -69,3 +69,5 @@ task deployEV3 << {
             }
         }
 }
+
+//deployEV3.dependsOn ['workerJar', 'scoutJar']
