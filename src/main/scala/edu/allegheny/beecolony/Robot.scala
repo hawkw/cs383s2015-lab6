@@ -38,9 +38,7 @@ object Robot {
    *
    * @return the color ID mode sensor provider
    */
-  def colorIDProvider: SampleProvider = {
-    return colorSensor.getColorIDMode
-  }
+  def colorIDProvider: SampleProvider = colorSensor.getColorIDMode
 
   /**
    * Factory method for a differential pilot with the robot's current
@@ -49,8 +47,7 @@ object Robot {
    * @return a DifferentialPilot configured for the robot's current
    *         configuration.
    */
-  def pilot: DifferentialPilot = {
-    return new DifferentialPilot(WHEEL_DIAM, TRACK_WIDTH, leftMotor, rightMotor)
-  }
+  def pilot: DifferentialPilot = new DifferentialPilot(
+    WHEEL_DIAM, TRACK_WIDTH, leftMotor, rightMotor)
 }
 
