@@ -17,6 +17,7 @@ import scala.language.postfixOps
 trait Robot {
 
   type Coordinate = Tuple2[Float,Float]
+  type Color = Int
 
   // -------------------------------------------------------------------------
   // PORT CONFIGURATION
@@ -62,7 +63,7 @@ trait Robot {
   /**
    * @return the color ID currently under the color sensor
    */
-  def checkColor: Int = {
+  def checkColor: Color = {
     colorIDProvider fetchSample (sample, 0) // ugh, I had to write an impure function
     sample(0) toInt
   }
