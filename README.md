@@ -16,7 +16,15 @@ procedure will be repeated until no more distinct colors are left to be found.
 Building and Deploying
 ----------------------
 
-You need LeJOS EV3 installed on your system, and you need to export `$EV3_HOME` to whatever directory EV3 is installed in. This is configured by default on Alden Hall systems. You do _not_ need Gradle or Scala installed, as the included Gradle wrapper script (`gradlew`) will download them for you and automatically manage versions.
+There is a Gradle build script for compiling the project and deploying it to the robot included. 
+
+#### Before building
+
+You need LeJOS EV3 installed on your system, and you need to export `$EV3_HOME` to whatever directory EV3 is installed in. This is configured by default on Alden Hall systems. 
+
+You do _not_ need Gradle or Scala installed, as the included Gradle wrapper script (`gradlew`) will download them for you and automatically manage versions.
+
+#### Build instructions
 
 The Gradle build script has the following tasks:
 
