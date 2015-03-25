@@ -5,7 +5,13 @@ package edu.allegheny.beecolony
  * @author Hawk Weisman
  */
 object Scout extends App with Robot {
-  val moves: Stream[Coordinate] = ??? // TODO: figure out how to generate square spiral
+  val increment = 2 // change this to increase the width by which the loop increases
+  val moves: Stream[Coordinate] = {
+    def loop(i: Int): Stream[Coordinate] =
+      (i * 1,i * 1)   #:: (i * -1,i * 1)  #::
+      (i * 1,i * -1)  #:: (i * -1,i * -1) #:: loop(i + increment)
+    loop(1)
+  }
   var seen: Set[Color] = Set()
 
   for { point <- moves } {
