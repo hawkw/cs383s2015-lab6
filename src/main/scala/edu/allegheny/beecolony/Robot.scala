@@ -54,7 +54,7 @@ trait Robot {
    * Move the robot to a coordinate pair
    * @param where the coordinate to move to
    */
-  def goTo(where: Coordinate): Unit = nav goTo (where._1,where._2)
+  def goTo(where: Coordinate): Unit = { case (x,y) => nav goTo (x,y) }
 
   /**
    * @return the current coordinates
