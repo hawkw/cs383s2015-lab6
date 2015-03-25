@@ -29,7 +29,7 @@ sourceSets {
 repositories {
     mavenCentral()
      flatDir {
-       dirs  System.getenv('EV3_HOME')+'/lib/ev3'
+       dirs  (System.getenv('EV3_HOME') != null ? System.getenv('EV3_HOME') +'/lib/ev3' : '/opt/local/lejos-ev3/lib/ev3')
    }
 }
 
