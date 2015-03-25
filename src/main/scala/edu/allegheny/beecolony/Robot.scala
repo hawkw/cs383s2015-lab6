@@ -1,5 +1,7 @@
 package edu.allegheny.beecolony
 
+import java.net.Socket
+
 import lejos.hardware.motor.EV3LargeRegulatedMotor
 import lejos.hardware.port.{MotorPort, SensorPort, Port}
 import lejos.hardware.sensor.EV3ColorSensor
@@ -48,7 +50,6 @@ trait Robot {
   private val poseProvider    = nav getPoseProvider
 
   private val sample = new Array[Float](1) // this is because the LeJOS api is awful
-
   /**
    * Move the robot to a coordinate pair
    * @param where the coordinate to move to
@@ -67,6 +68,12 @@ trait Robot {
     colorIDProvider fetchSample (sample, 0) // ugh, I had to write an impure function
     sample(0) toInt
   }
+
+  // -------------------------------------------------------------------------
+  // NETWORKING
+  // -------------------------------------------------------------------------
+  def socket: Socket
+  val port: Int = 1234
 
 
 
