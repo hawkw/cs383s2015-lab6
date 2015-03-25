@@ -1,5 +1,7 @@
 # cs383s2015-lab6
 
+[![Codacy Badge](https://www.codacy.com/project/badge/7378757016b7487084f11b23e064667c)](https://www.codacy.com)
+
 Will Yarbrough, Hawk Weisman, Scott Meltzer
 
 Project Description
