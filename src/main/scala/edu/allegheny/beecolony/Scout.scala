@@ -9,11 +9,13 @@ import java.net.ServerSocket
 object Scout extends App with Robot {
   val server = new ServerSocket(port)
   val moves: Stream[Coordinate] = {
-    val scale = 8.0   // inches between points
-    def loop(i: Int): Stream[Coordinate] =
+    val scale = 8.0f   // inches between points
+    def loop(i: Int): Stream[Coordinate] = {
       val x = i * scale
-      (x *  1,x *  1) #:: (x * -1,x * 1) #:: (x * 1,x * -1) #::
-      (x * -1,x * -1) #:: (x *  1,x * 1) #:: loop(i + 1)
+      (x *  1,x *  1)   #:: (x * -1,x * 1)  #:: (x * 1f,x * -1) #::
+        (x * -1,x * -1) #:: (x *  1f,x * 1) #:: loop(i + 1)
+    }
+
     loop(1)
   }
   var seen: Set[Color] = Set()

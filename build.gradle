@@ -18,16 +18,18 @@ configurations {
     sshAntTask
     provided
 }
+
+
 sourceSets {
-    main.compileClasspath += [configurations.provided]
-    test.compileClasspath += [configurations.provided]
-    test.runtimeClasspath += [configurations.provided]
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
 }
 
 repositories {
     mavenCentral()
      flatDir {
-       dirs  (System.env.EV3_HOME != null ? System.env.EV3_HOME + "/lib/ev3": '/opt/lejos-ev3/lib/ev3')
+       dirs  System.getenv('EV3_HOME')+'/lib/ev3'
    }
 }
 
@@ -58,7 +60,7 @@ task workerJar(type: Jar, dependsOn: build) {
 
 task scoutJar(type: Jar, dependsOn: build) {
     name = 'scoutJar'
-    description = 'Compiles the project and assembles the Scout robot jar'
+    description = 'Compiles the project and assembles the Worker robot jar'
 
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Scout')
@@ -76,9 +78,3 @@ task deployEV3 << {
 }
 
 //deployEV3.dependsOn ['workerJar', 'scoutJar']
-
-idea {
-    module {
-        scopes.PROVIDED.plus += [configurations.provided]
-    }
-}
