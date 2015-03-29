@@ -9,7 +9,9 @@ import lejos.robotics.SampleProvider
 import lejos.robotics.navigation.DifferentialPilot
 import lejos.robotics.navigation.Navigator
 
+import scala.annotation.tailrec
 import scala.language.postfixOps
+import scala.util.{Try,Success,Failure}
 
 /**
  * Stores shared robot configuration.
@@ -75,7 +77,16 @@ trait Robot {
   def socket: Socket
   val port: Int = 1234
 
-
+  /**
+   * Try a failable action until it succeeds
+   * @param fn a function which may throw exceptions
+   * @tparam T the return type of the failable function
+   * @return the result of that function once it succeeds
+   */
+  @tailrec final def retry[T](fn: => T): T = Try { fn } match {
+      case Success(fully) => fully
+      case Failure(_)     => retry(fn)
+    }
 
 }
 

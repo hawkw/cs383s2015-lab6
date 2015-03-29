@@ -1,5 +1,6 @@
 package edu.allegheny.beecolony
 
+import java.io.ObjectOutputStream
 import java.net.ServerSocket
 
 /**
@@ -20,15 +21,21 @@ object Scout extends App with Robot {
   }
   var seen: Set[Color] = Set()
 
-  def socket = server accept
+  // this SHOULD block on the socket until the remote host connects,
+  val socket = retry(server accept)// meaning that we won't start actually
+  // start searching until the worker connects; i am assuming this
+  // will work correctly with the way DelayedInit works, but I can't
+  // guarantee it.
+  //  -- Hawk, 03/19/15
+  val output = new ObjectOutputStream(socket getOutputStream)
 
-  for { point <- moves } {
+  for { point <- moves } { // TODO: this should terminate when we've seen all the colors
     goTo(point)
     val color = checkColor
     if (!(seen contains color)) {
-      seen += color
-      // TODO: tell the other robot
-    }
+      output writeObject location // serialize the current coordinate
+      // and send it to the worker
+      seen += color // we've seen this color
+    } // continue
   }
-
 }
