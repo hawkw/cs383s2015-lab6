@@ -78,3 +78,8 @@ task deployEV3 << {
 }
 
 //deployEV3.dependsOn ['workerJar', 'scoutJar']
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
