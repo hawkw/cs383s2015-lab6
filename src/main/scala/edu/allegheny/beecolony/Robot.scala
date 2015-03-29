@@ -3,11 +3,9 @@ package edu.allegheny.beecolony
 import java.net.Socket
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor
-import lejos.hardware.port.{MotorPort, SensorPort, Port}
+import lejos.hardware.port.{MotorPort, SensorPort}
 import lejos.hardware.sensor.EV3ColorSensor
-import lejos.robotics.SampleProvider
-import lejos.robotics.navigation.DifferentialPilot
-import lejos.robotics.navigation.Navigator
+import lejos.robotics.navigation.{DifferentialPilot,Navigator}
 
 import scala.annotation.tailrec
 import scala.language.postfixOps
