@@ -8,7 +8,9 @@ import java.net.ServerSocket
  * @author Hawk Weisman
  */
 object Scout extends App with Robot {
+  val maxColors = 7 // the maximum number of colors
   val server = new ServerSocket(port)
+
   val moves: Stream[Coordinate] = {
     val scale = 8.0f   // inches between points
     def loop(i: Int): Stream[Coordinate] = {
@@ -27,15 +29,24 @@ object Scout extends App with Robot {
   // will work correctly with the way DelayedInit works, but I can't
   // guarantee it.
   //  -- Hawk, 03/19/15
-  val output = new ObjectOutputStream(socket getOutputStream)
+  val output = socket getOutputStream
+  val serialize = new ObjectOutputStream(output)
 
-  for { point <- moves } { // TODO: this should terminate when we've seen all the colors
+  for { (point, _) <- moves
+        .zip(Stream continually seen.size)
+        .takeWhile{ case (_: Coordinate, size: Int) => size < maxColors }
+  } {
     goTo(point)
     val color = checkColor
     if (!(seen contains color)) {
-      output writeObject location // serialize the current coordinate
+      serialize writeObject location // serialize the current coordinate
       // and send it to the worker
       seen += color // we've seen this color
     } // continue
   }
+
+  serialize.close() // closing resources? what is this, C?
+  output.close()    // TODO: monadic
+  socket.close()
+  server.close()
 }
