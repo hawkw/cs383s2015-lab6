@@ -3,6 +3,8 @@ package edu.allegheny.beecolony
 import java.io.ObjectOutputStream
 import java.net.ServerSocket
 
+import scala.collection.mutable
+
 /**
  * Contains the Scout robot behavior
  * @author Hawk Weisman
@@ -21,7 +23,7 @@ object Scout extends App with Robot {
 
     loop(1)
   }
-  var seen: Set[Color] = Set()
+  val seen = mutable.Set[Color]()
 
   // this SHOULD block on the socket until the remote host connects,
   val socket = retry(server accept)// meaning that we won't start actually
