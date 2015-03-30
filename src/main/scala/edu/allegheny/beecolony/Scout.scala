@@ -10,6 +10,7 @@ import scala.collection.mutable
  * @author Hawk Weisman
  */
 object Scout extends App with Robot with Communication {
+  val floorColor = checkColor
   val maxColors = 7 // the maximum number of colors
   val server = new ServerSocket(port)
 
@@ -41,12 +42,16 @@ object Scout extends App with Robot with Communication {
     goTo(point)
     while (nav isMoving) {
       val color = checkColor
-      if (!(seen contains color)) {
-        serialize writeObject location // serialize the current coordinate
-        // and send it to the worker
-        seen += color // we've seen this color
+      (!(seen contains color), color != floorColor) match {
+        case (true,true) => {
+          serialize writeObject location // serialize the current coordinate
+          // and send it to the worker
+          seen += color // we've seen this color
+        }
+        case _ => {}
       }
-    } // continue
+      // continue
+    }
   }
 
   serialize.close() // closing resources? what is this, C?
