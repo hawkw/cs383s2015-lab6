@@ -6,6 +6,7 @@ apply plugin: "application"
 sourceCompatibility = 1.8
 version = '1.0'
 compileJava.options.encoding = 'UTF-8'
+mainClassName = ''
 
 buildscript {
     repositories {
@@ -54,10 +55,12 @@ task workerJar(type: Jar, dependsOn: build) {
     description = 'Compiles the project and assembles the Worker robot jar'
     archiveName = 'Worker.jar'
 
+
+    manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Worker')
+
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 
-    manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Worker')
 
 }
 
@@ -66,10 +69,11 @@ task scoutJar(type: Jar, dependsOn: build) {
     description = 'Compiles the project and assembles the Worker robot jar'
     archiveName = 'Scout.jar'
 
+    manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Scout')
+
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 
-    manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Scout')
 }
 
 task sensorTestJar(type: Jar, dependsOn: build) {
