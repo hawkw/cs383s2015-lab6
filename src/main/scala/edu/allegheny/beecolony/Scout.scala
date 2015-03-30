@@ -9,7 +9,7 @@ import scala.collection.mutable
  * Contains the Scout robot behavior
  * @author Hawk Weisman
  */
-object Scout extends App with Robot {
+object Scout extends App with Robot with Communication {
   val maxColors = 7 // the maximum number of colors
   val server = new ServerSocket(port)
 
