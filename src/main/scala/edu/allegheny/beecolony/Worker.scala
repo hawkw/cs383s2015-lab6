@@ -31,6 +31,7 @@ object Worker extends App with Robot with Communication {
       deserialize.readObject().asInstanceOf[Coordinate]
     )
     goTo(queue dequeue())
+    checkColor foreach ( _ => goTo (0,0) ) // if we see a new color, go back to origin
   }
   deserialize.close()
   input.close() // TODO: write cleanly function or something
