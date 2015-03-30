@@ -36,3 +36,31 @@ To list all available Gradle tasks, type `./gradlew tasks`. The following tasks 
 + `./gradlew deployEV3` will deploy all assembled jarfiles to an EV3 brick if you have one connected. The SSH configuration for the EV3 brick is stored in `gradle.properties`
 
 Note that you may string multiple tasks together, as in `./gradlew workerJar scoutJar deployEV3`. The Jar tasks will build the project if it has not already been built.
+
+Implementation Details
+----------------------
+
+The code for this project is found in the [source
+folder](src/main/scala/edu/allegheny/beecolony). The
+[Scout.scala](src/main/scala/edu/allegheny/beecolony/Scout.scala) and
+[Worker.scala](src/main/scala/edu/allegheny/beecolony/Worker.scala) files
+contain the code for the two types of robot in the multi-robot system. Both of
+these Scala objects use the Robot trait, which is defined in
+[Robot.scala](src/main/scala/edu/allegheny/beecolony/Robot.scala). This allows
+the common features between the Worker and Scout files to be abstracted away
+into a single file.
+
+### Scout.scala
+Our `Scout` program uses an infinite stream of Cartesian-style coordinates to
+determine the square-spiral path it takes; the logic for this is defined in the
+`moves` value, which uses a generator function (`loop`) to produce the stream.
+When told to follow these points, the EV3 robot moves square shapes that get
+progressively larger (by 8 inches, to be exact), giving the `Scout` a
+reasonable degree of coverage around the hive location.
+
+`Scout` loops over this list of points and calls the `goTo` function of its
+`Navigator` object to travel in the spiral shape. While it travels from point
+to point along this spiral, it checks the input from its color sensor, and if
+this input represents a color source, it sends its current location to the
+worker robot.
+
