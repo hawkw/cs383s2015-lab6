@@ -55,6 +55,8 @@ task workerJar(type: Jar, dependsOn: build) {
     archiveName = 'Worker.jar'
 
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+
     manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Worker')
 
 }
@@ -65,6 +67,8 @@ task scoutJar(type: Jar, dependsOn: build) {
     archiveName = 'Scout.jar'
 
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+
     manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Scout')
 }
 
@@ -73,7 +77,11 @@ task sensorTestJar(type: Jar, dependsOn: build) {
     description = 'Compiles the project and assembles the sensor test program'
     archiveName = 'ColorSensorTest.jar'
 
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+
     manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.ColorSensorTest')
 }
 
