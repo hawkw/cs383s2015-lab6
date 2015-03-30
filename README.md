@@ -64,3 +64,10 @@ to point along this spiral, it checks the input from its color sensor, and if
 this input represents a color source, it sends its current location to the
 worker robot.
 
+### Worker.scala
+Our `Worker` program is even simpler than our `Scout` implementation. It waits
+to receive serialized coordinates from the `Scout`, and when one is received
+the `Worker` will travel to that location and scan the color at that spot. If,
+at that spot, the `Worker` recognizes that the color is special, the Worker
+will retrieve the color and return it to the hive.
+
