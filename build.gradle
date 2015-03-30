@@ -66,6 +66,14 @@ task scoutJar(type: Jar, dependsOn: build) {
     manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.Scout')
 }
 
+task sensorTestJar(type: Jar, dependsOn: build) {
+    name = 'sensorTestJar'
+    description = 'Compiles the project and assembles the sensor test program'
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest.attributes('Main-Class' : 'edu.allegheny.beecolony.ColorSensorTest')
+}
+
 task deployEV3 << {
     ant.taskdef(name: 'scp', classname: 'org.apache.tools.ant.taskdefs.optional.ssh.Scp', classpath: configurations.sshAntTask.asPath)
     ant.scp(todir: ev3_username+'@'+ev3_server+':/home/lejos/programs',

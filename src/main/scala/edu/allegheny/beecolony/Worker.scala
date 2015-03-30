@@ -9,7 +9,7 @@ import scala.collection.mutable
  * Created by hawk on 3/29/15.
  * @author Hawk Weisman <hi@hawkweisman.me>
  */
-object Worker extends App with Robot{
+object Worker extends App with Robot with Communication {
   val scoutIP = "10.0.0.36" // the Scout robot's IP address
   // change this as appropriate
 
