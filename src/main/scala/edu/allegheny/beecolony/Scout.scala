@@ -40,7 +40,7 @@ object Scout extends App with Robot with Communication {
         .takeWhile{ case (_: Coordinate, size: Int) => size < maxColors }
   } {
     goTo(point)
-    while (nav isMoving) {
+    while (isMoving) {
       val color = checkColor
       (!(seen contains color), color != floorColor) match {
         case (true,true) => {

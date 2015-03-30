@@ -55,6 +55,11 @@ trait Robot {
    * @param where the coordinate to move to
    */
   def goTo(where: Coordinate): Unit = { (x: Float,y: Float) => nav goTo (x,y) }
+  /**
+   * @return true if we are currently moving
+   */
+  def isMoving: Boolean = nav isMoving
+
 
   /**
    * @return the current coordinates
