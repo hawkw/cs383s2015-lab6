@@ -49,7 +49,7 @@ trait Robot {
   private val nav             = new Navigator(pilot)
   private val poseProvider    = nav getPoseProvider
 
-  private val sample = new Array[Float](1) // this is because the LeJOS api is awful
+  private val sample = new Array[Float](2) // this is because the LeJOS api is awful
   /**
    * Move the robot to a coordinate pair
    * @param where the coordinate to move to
