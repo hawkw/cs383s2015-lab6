@@ -42,13 +42,12 @@ Implementation Details
 
 The code for this project is found in the [source
 folder](src/main/scala/edu/allegheny/beecolony). The
-[Scout.scala](src/main/scala/edu/allegheny/beecolony/Scout.scala) and
-[Worker.scala](src/main/scala/edu/allegheny/beecolony/Worker.scala) files
+[`Scout.scala`](src/main/scala/edu/allegheny/beecolony/Scout.scala) and
+[`Worker.scala`](src/main/scala/edu/allegheny/beecolony/Worker.scala) files
 contain the code for the two types of robot in the multi-robot system. Both of
-these Scala objects use the Robot trait, which is defined in
-[Robot.scala](src/main/scala/edu/allegheny/beecolony/Robot.scala). This allows
-the common features between the Worker and Scout files to be abstracted away
-into a single file.
+these Scala objects use the `Robot` and `Communication` traits, which are defined in
+[`Robot.scala`](src/main/scala/edu/allegheny/beecolony/Robot.scala) [`Communication.scala`](src/main/scala/edu/allegheny/beecolony/Robot.scala), respectively, and contain common functionality used by all robots in the multi-robot system. This allows
+the common features between the `Worker` and `Scout` programs to be abstracted away, so that the implementors of those programs need only deal with behavior specific to each role.
 
 ### Scout.scala
 Our `Scout` program uses an infinite stream of Cartesian-style coordinates to
