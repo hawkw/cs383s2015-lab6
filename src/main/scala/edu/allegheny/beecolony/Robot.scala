@@ -50,6 +50,8 @@ trait Robot {
   private val poseProvider    = nav getPoseProvider
 
   private val sample = new Array[Float](2) // this is because the LeJOS api is awful
+
+  val floorColor = getColor
   /**
    * Move the robot to a coordinate pair
    * @param where the coordinate to move to
@@ -69,9 +71,18 @@ trait Robot {
   /**
    * @return the color ID currently under the color sensor
    */
-  def checkColor: Color = {
+  def getColor: Color = {
     colorIDProvider fetchSample (sample, 0) // ugh, I had to write an impure function
     sample(0) toInt
+  }
+
+  /**
+   * Returns the color ID currently under the color sensor color if it is not the floor color
+   * @return Some(color) if we are looking at a non-floor color; None otherwise
+   */
+  def checkColor: Option[Color] = getColor match {
+    case c if c != floorColor => Some(c)
+    case _                    => None
   }
 
 }
