@@ -39,11 +39,13 @@ object Scout extends App with Robot with Communication {
         .takeWhile{ case (_: Coordinate, size: Int) => size < maxColors }
   } {
     goTo(point)
-    val color = checkColor
-    if (!(seen contains color)) {
-      serialize writeObject location // serialize the current coordinate
-      // and send it to the worker
-      seen += color // we've seen this color
+    while (nav isMoving) {
+      val color = checkColor
+      if (!(seen contains color)) {
+        serialize writeObject location // serialize the current coordinate
+        // and send it to the worker
+        seen += color // we've seen this color
+      }
     } // continue
   }
 
