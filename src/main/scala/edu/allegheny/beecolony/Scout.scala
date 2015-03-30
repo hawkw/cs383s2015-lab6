@@ -17,8 +17,8 @@ object Scout extends App with Robot {
     val scale = 8.0f   // inches between points
     def loop(i: Int): Stream[Coordinate] = {
       val x = i * scale
-      (x *  1,x *  1)   #:: (x * -1,x * 1)  #:: (x * 1f,x * -1) #::
-        (x * -1,x * -1) #:: (x *  1f,x * 1) #:: loop(i + 1)
+      (x *  1,x *  1) #:: (x * -1,x * 1) #:: (x * 1,x * -1) #::
+      (x * -1,x * -1) #:: (x *  1,x * 1) #:: loop(i + 1)
     }
 
     loop(1)
