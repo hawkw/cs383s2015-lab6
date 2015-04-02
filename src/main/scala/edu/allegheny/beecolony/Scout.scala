@@ -11,12 +11,14 @@ import scala.collection.mutable
  */
 object Scout extends App with Robot with Communication {
 
-  val maxColors = 7 // the maximum number of colors
+  val maxColors = 4 // the maximum number of colors
   val server = new ServerSocket(port)
 
+  println("before stream")
   val moves: Stream[Coordinate] = {
     val scale = 8.0f   // inches between points
     def loop(i: Int): Stream[Coordinate] = {
+      println(s"evaling stream($i)")
       val x = i * scale
       (x *  1,x *  1) #:: (x * -1,x * 1) #:: (x * 1,x * -1) #::
       (x * -1,x * -1) #:: (x *  1,x * 1) #:: loop(i + 1)
@@ -27,11 +29,12 @@ object Scout extends App with Robot with Communication {
   val seen = mutable.Set[Color]()
 
   // this SHOULD block on the socket until the remote host connects,
-  val socket = retry(server accept)// meaning that we won't start actually
+  val socket = retry({println(s"Waiting on $port"); server accept})// meaning that we won't start actually
   // start searching until the worker connects; i am assuming this
   // will work correctly with the way DelayedInit works, but I can't
   // guarantee it.
   //  -- Hawk, 03/19/15
+  println("Somebody wants to be friends with me!")
   val output = socket getOutputStream
   val serialize = new ObjectOutputStream(output)
 
