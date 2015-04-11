@@ -70,3 +70,22 @@ the `Worker` will travel to that location and scan the color at that spot. If,
 at that spot, the `Worker` recognizes that the color is special, the Worker
 will retrieve the color and return it to the hive.
 
+Takeaways
+---------
+
+* Use of the gradle build system to build our project and deploy it to the EV3
+  robots. This was a rewarding task, as it removed the “red tape” from
+  developing our project and allowed us to focus on the more interesting
+  implementation details of the lab.
+* The use of Scala traits to define basic robot behavior that was common to
+  both robots in our system. Scala traits are like Java interfaces in that they
+  allow multiple inheritance of classes for a single Scala class, but unlike
+  Java interfaces allows for the definition of concrete methods (like our
+  `goTo` function), so that the behavior common to both robots could be written
+  and put out of the way prior to our development of the specific Robot roles.
+  Essentially, we used classic OO constructs to simplify our software design.
+* The communication difficulties between the robots presented a significant
+  obstacle to our cause. Though we could not effectively establish
+  communication between the robots (and develop the video deliverable for this
+  lab assignment), we still learned a lot about the nuances of the
+  client-server model of explicit multi-robot communication.
