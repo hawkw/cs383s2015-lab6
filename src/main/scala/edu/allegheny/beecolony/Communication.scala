@@ -23,6 +23,6 @@ trait Communication {
    */
   @tailrec final def retry[T](fn: => T): T = Try { fn } match {
     case Success(fully) => fully
-    case Failure(_)     => retry(fn)
+    case Failure(why)  => println(why); retry(fn)
   }
 }

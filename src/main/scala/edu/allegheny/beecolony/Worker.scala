@@ -10,14 +10,15 @@ import scala.collection.mutable
  * @author Hawk Weisman <hi@hawkweisman.me>
  */
 object Worker extends App with Robot with Communication {
-  val scoutIP = "10.0.0.36" // the Scout robot's IP address
+  val scoutIP = "141.195.226.90" // the Scout robot's IP address
   // change this as appropriate
 
-  override def socket: Socket = retry(new Socket(scoutIP, port))
+  override def socket: Socket = retry({println(s"Connecting to $scoutIP\non port $port"); new Socket(scoutIP, port)})
 
   val queue = mutable.Queue[Coordinate]()
 
   val input = socket.getInputStream
+  println("Somebody wants to be friends with me!")
   val deserialize = new ObjectInputStream(input)
 
   Stream continually{
